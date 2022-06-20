@@ -7,27 +7,30 @@
     LunchCheckController.$inject = ['$scope']
 
     function LunchCheckController($scope) {
+        $scope.alert = ''
+
         $scope.items = ''
 
-        $scope.message = ''
-        
-        $scope.checked = false
+        $scope.reviewed = false
 
-        $scope.checkLunch = function () {
+        $scope.checkIfTooMuch = function () {
             if ($scope.items.trim().length === 0) {
                 $scope.empty = true
             } else {
-                $scope.checked = true
+                $scope.reviewed = true
+
                 $scope.empty = false
-                var arrayDishes = $scope.items.split(',')
-                var arrayDishesWithoutEmptys = arrayDishes.filter(function (v) {
-                    return v.trim() !== ''
+                
+                let arrayItems = $scope.items.split(',')
+
+                let arrayItemsWithoutEmpty = arrayItems.filter(item =>  {
+                    return item.trim() !== ''
                 })
 
-                if (arrayDishesWithoutEmptys.length <= 3) {
-                    $scope.message = 'Enjoy!'
+                if (arrayItemsWithoutEmpty.length <= 3) {
+                    $scope.alert = 'Enjoy your lunch!'
                 } else {
-                    $scope.message = 'Too much!'
+                    $scope.alert = 'Too much food, watch it!'
                 }
             }
         }
